@@ -4,12 +4,22 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.holonext.holonextnativesdk.httphandler.RequestHandler;
+
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  *
@@ -60,6 +70,28 @@ public class ArView extends ArFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RequestHandler.MakeJsonBasedRequest(this.getActivity(), null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();
+                Log.d("On Response ",response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                NetworkResponse errorRes = error.networkResponse;
+                String stringData = "";
+                if(errorRes != null && errorRes.data != null){
+                    try {
+                        stringData = new String(errorRes.data,"UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.e("Error",stringData);
+                Log.e("RequestHandler ","Something went wrong");
+            }
+        });
 
     }
 
@@ -69,14 +101,14 @@ public class ArView extends ArFragment {
     }
 
     @Override
-    public void onInflate(@NonNull Context context, @NonNull AttributeSet attrs, @Nullable Bundle savedInstanceState) {
+    public void onInflate(@NonNull final Context context, @NonNull AttributeSet attrs, @Nullable Bundle savedInstanceState) {
         super.onInflate(context, attrs, savedInstanceState);
 
-        TypedArray arr = getActivity().obtainStyledAttributes(attrs,R.styleable.HoloNextArView);
+        TypedArray arr = getActivity().obtainStyledAttributes(attrs,R.styleable.ArView);
 
-        CharSequence apiKey = arr.getText(R.styleable.HoloNextArView_hnar_api_key);
-        RendererType rendererType = RendererType.values()[arr.getInt(R.styleable.HoloNextArView_hnar_renderer,0)];
-        ToolsetType toolsetType = ToolsetType.values()[arr.getInt(R.styleable.HoloNextArView_hnar_toolset,0)];
+        CharSequence apiKey = arr.getText(R.styleable.ArView_hnar_api_key);
+        RendererType rendererType = RendererType.values()[arr.getInt(R.styleable.ArView_hnar_renderer,0)];
+        ToolsetType toolsetType = ToolsetType.values()[arr.getInt(R.styleable.ArView_hnar_toolset,0)];
 
         arr.recycle();
     }

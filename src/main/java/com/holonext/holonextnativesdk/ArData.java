@@ -1,11 +1,6 @@
 package com.holonext.holonextnativesdk;
 
 import androidx.annotation.NonNull;
-
-;
-
-;
-
 /**
  *
  * This is ArData class that will be using to set or get optinal features of ArView.
