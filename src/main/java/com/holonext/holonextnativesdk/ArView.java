@@ -14,8 +14,11 @@ import androidx.annotation.Nullable;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.ar.core.exceptions.UnsupportedConfigurationException;
 import com.google.ar.sceneform.ux.ArFragment;
+import com.holonext.holonextnativesdk.exception.HolonextSdkInitializeException;
 import com.holonext.holonextnativesdk.httphandler.RequestHandler;
+import com.holonext.holonextnativesdk.renderer.ArRenderer;
 
 import org.json.JSONObject;
 
@@ -30,10 +33,12 @@ import java.io.UnsupportedEncodingException;
  */
 public class ArView extends ArFragment {
     /**
-     * ArData is the data class used to store the options that will be used when creating the HoloNextARView.
+     * ArConfig is the data class used to store the options that will be used when creating the HoloNextARView.
      */
     @NonNull
-    private ArData arData;
+    private ArConfig arConfig;
+
+    private ArRenderer arRenderer;
 
     /**
      * Default contructor.Using an API key that created for test purposes by default.
@@ -42,35 +47,44 @@ public class ArView extends ArFragment {
      *  <p>- Using default toolset type as basic
      */
     public ArView(){
-        if (this.arData == null)
-            this.arData = new ArData();
+        if (this.arConfig == null)
+            this.arConfig = new ArConfig();
 
-        this.arData.setHnarApiKey(ArData.TestAPIKey);
-        this.arData.setHnarRendererType(RendererType.DEFAULT);
-        this.arData.setHnarToolsetType(ToolsetType.BASIC);
+        this.arConfig.setHnarApiKey(ArConfig.TestAPIKey);
+        this.arConfig.setHnarRendererType(RendererType.DEFAULT);
+        this.arConfig.setHnarToolsetType(ToolsetType.BASIC);
     }
 
-    public ArView(@NonNull ArData arData){
-        if(this.arData == null)
-            this.arData = new ArData();
+    public ArView(@NonNull ArConfig arConfig){
+        if(this.arConfig == null)
+            this.arConfig = new ArConfig();
 
-        this.arData.setHnarToolsetType(arData.getHnarToolsetType());
-        this.arData.setHnarRendererType(arData.getHnarRendererType());
-        this.arData.setHnarApiKey(arData.getHnarApiKey());
+        this.arConfig.setHnarToolsetType(arConfig.getHnarToolsetType());
+        this.arConfig.setHnarRendererType(arConfig.getHnarRendererType());
+        this.arConfig.setHnarApiKey(arConfig.getHnarApiKey());
     }
 
     /**
      *
-     * @return ArData
+     * @return ArConfig
      */
-    public ArData getArData(){
-        return this.arData;
+    public ArConfig getArConfig(){
+        return this.arConfig;
+    }
+
+
+    //TODO: Replace init function and create build function on ArRenderer class.
+    public void Init(@NonNull String sceneRelationId) throws HolonextSdkInitializeException {
+        if (sceneRelationId.isEmpty()){
+            throw new HolonextSdkInitializeException("You must specify a 'scene relation id' to launch model its has.");
+        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RequestHandler.MakeJsonBasedRequest(this.getActivity(), null, new Response.Listener<JSONObject>() {
+
+        RequestHandler.PostJsonBasedRequest(this.getActivity(), null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Toast.makeText(getContext(),response.toString(),Toast.LENGTH_LONG).show();

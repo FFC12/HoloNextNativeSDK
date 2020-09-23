@@ -3,12 +3,12 @@ package com.holonext.holonextnativesdk;
 import androidx.annotation.NonNull;
 /**
  *
- * This is ArData class that will be using to set or get optinal features of ArView.
+ * This is ArConfig class that will be using to set or get optinal features of ArView.
  *
  * <p>Please see the {@link ArView} class for details.
  *
  */
-public class ArData{
+public class ArConfig {
     /**
      * The HoloNext API key.
      */
@@ -26,9 +26,10 @@ public class ArData{
     private ToolsetType hnarToolsetType;
 
     /**
-     * An API key for development stage. It is available for only test purposes. <b>Don't use it on production stage </b>.
+     * An API key for development stage. It is available for only test purposes.
+     * <b>Don't use it on production stage and use API key provided by our-service only for you.</b>.
      */
-    public final static String TestAPIKey = "#123@we?A23asdkl@#23123";
+    public final static String TestAPIKey = "XRoZUSFPSH6qBqrz62sERFZbsLwfzuPLLE2wcAC9LMIZ7cs0iDhSW8jrLROHFLKB";
 
 
     public RendererType getHnarRendererType() {

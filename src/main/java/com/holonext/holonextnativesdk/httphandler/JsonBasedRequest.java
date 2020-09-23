@@ -20,24 +20,24 @@ import java.util.Map;
 /**
  * A Helper Class for Http Requests and Handle JsonObject Responses
  */
-public class JsonBasedRequestHandler extends Request<JSONObject> {
+public class JsonBasedRequest extends Request<JSONObject> {
     /**
      * Service URI of HoloNext API.
      */
-    private final static String ServiceURI = "https://postman-echo.com/get?foo1=bar1&foo2=bar2";//"https://holonext.azurewebsites.net/api/v1/scene/shared-scene/5de12029362138005683f7b8/Office_Chair.glb";
+    private final static String ServiceURI = "https://holonext.azurewebsites.net/api/v1/scene/sdkCheckModel";
 
     private Listener<JSONObject> listener;
 
     private Map<String,String> params;
 
-    public JsonBasedRequestHandler(Map<String, String> params, Listener<JSONObject> reponseListener, ErrorListener errorListener) {
+    public JsonBasedRequest(Map<String, String> params, Listener<JSONObject> reponseListener, ErrorListener errorListener) {
         super(Method.GET, ServiceURI, errorListener);
         this.listener = reponseListener;
         this.params = params;
     }
 
-    public JsonBasedRequestHandler(int method, String url, Map<String,String> params, Listener<JSONObject> responseListener, @Nullable ErrorListener listener) {
-        super(method, url, listener);
+    public JsonBasedRequest(int method, Map<String,String> params, Listener<JSONObject> responseListener, @Nullable ErrorListener listener) {
+        super(method, ServiceURI, listener);
         this.listener = responseListener;
         this.params = params;
     }

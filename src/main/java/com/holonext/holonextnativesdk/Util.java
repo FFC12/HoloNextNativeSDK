@@ -11,8 +11,6 @@ public class Util {
         StringBuilder tempUri = new StringBuilder(uri);
         String reversedUri = tempUri.reverse().toString();
 
-//        Log.d("Exracted Extension",reversedUri);
-
         String extension = "";
         for ( int i = 0; i < reversedUri.length(); i++){
             char ch = reversedUri.charAt(i);
