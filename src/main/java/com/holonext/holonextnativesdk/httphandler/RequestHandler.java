@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class RequestHandler {
     static public void PostJsonBasedRequest(Activity activity, Map<String,String> params, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
-        RequestQueue requestQueue = Volley.newRequestQueue(activity);
+        RequestQueue requestQueue = Volley.newRequestQueue(activity.getBaseContext());
         JsonBasedRequest jsonRequest = new JsonBasedRequest(Request.Method.POST,params,listener,errorListener);
         requestQueue.add(jsonRequest);
     }

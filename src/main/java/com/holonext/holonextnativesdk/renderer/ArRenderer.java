@@ -1,5 +1,6 @@
 package com.holonext.holonextnativesdk.renderer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.widget.Toast;
@@ -16,12 +17,26 @@ import com.holonext.holonextnativesdk.exception.HolonextSdkUnknownModelExtension
 public class ArRenderer {
     private ModelRenderable modelRenderable;
 
-    public ArRenderer(){
+    public ArRenderer(ArView view,Context context){
         //use a default model URL.
+        String modelUrl = "https://holonext.azurewebsites.net/api/v1/scene/shared-scene/5f69f1a76512d13ac47ad598/beer_test.glb";
+        try {
+            initRenderer(view,context,modelUrl);
+        } catch (HolonextSdkUnknownModelExtensionException e) {
+            e.printStackTrace();
+        }
     }
 
-    public ArRenderer(ArView view, String modelUrl) throws HolonextSdkUnknownModelExtensionException{
-        //Selected GLB as a default
+    public ArRenderer(ArView view,Context context, String modelUrl){
+        try {
+            initRenderer(view,context,modelUrl);
+        } catch (HolonextSdkUnknownModelExtensionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initRenderer(ArView view,Context context, String modelUrl) throws HolonextSdkUnknownModelExtensionException{
+        //Selected GLB as a default source type
         RenderableSource.SourceType modelFormat = RenderableSource.SourceType.GLB;
 
         if (Util.ExtractFileExtensionFromURI(modelUrl) == "glb"){
@@ -32,21 +47,20 @@ public class ArRenderer {
             throw new HolonextSdkUnknownModelExtensionException("Unknown source type ( model format ). GLB or GLTF types supported for now!");
         }
 
-        Context context = view.getContext();
         ModelRenderable.builder()
                 .setSource(context,
                         RenderableSource.builder()
-                        .setSource(
-                                context,
-                                Uri.parse(modelUrl),
-                                modelFormat)
-                        .setScale(1.0f)
-                        .build())
+                                .setSource(
+                                        context,
+                                        Uri.parse(modelUrl),
+                                        modelFormat)
+                                .setScale(1.0f)
+                                .build())
                 .setRegistryId(modelUrl)
                 .build()
                 .thenAccept(renderable -> modelRenderable = renderable) //TODO: Will be documented that Java 1_7 not supported to lambda expressions.
                 .exceptionally(throwable -> {
-                    Toast.makeText(context,"Can't loaded model",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Can't load model",Toast.LENGTH_LONG).show();
                     return null;
                 });
 
@@ -54,15 +68,12 @@ public class ArRenderer {
             Anchor anchor = hitResult.createAnchor();
             AnchorNode anchorNode = new AnchorNode(anchor);
             anchorNode.setParent(view.getArSceneView().getScene());
-            createModel(view,anchorNode);
-        });
-    }
 
-    private void createModel(ArView view,AnchorNode anchorNode){
-        TransformableNode node = new TransformableNode(view.getTransformationSystem());
+            TransformableNode node = new TransformableNode(view.getTransformationSystem());
 //        node.setLocalScale(new Vector3(1.0f * scaleFactor,1.0f * scaleFactor, 1.0f * scaleFactor));
-        node.setParent(anchorNode);
-        node.setRenderable(modelRenderable);
-        node.select();
+            node.setParent(anchorNode);
+            node.setRenderable(modelRenderable);
+            node.select();
+        });
     }
 }

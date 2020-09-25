@@ -1,5 +1,8 @@
 package com.holonext.holonextnativesdk;
 
+import android.app.Activity;
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 /**
  *
@@ -26,6 +29,11 @@ public class ArConfig {
     private ToolsetType hnarToolsetType;
 
     /**
+     * ArView context reference
+     */
+    private ArView hnarArView;
+
+    /**
      * An API key for development stage. It is available for only test purposes.
      * <b>Don't use it on production stage and use API key provided by our-service only for you.</b>.
      */
@@ -35,6 +43,8 @@ public class ArConfig {
     public RendererType getHnarRendererType() {
         return hnarRendererType;
     }
+
+    public ArView getHnarArView() { return hnarArView; }
 
     public ToolsetType getHnarToolsetType() {
         return hnarToolsetType;
@@ -46,6 +56,10 @@ public class ArConfig {
 
     public void setHnarRendererType(RendererType hnarRendererType) {
         this.hnarRendererType = hnarRendererType;
+    }
+
+    public void setHnarArView(ArView arView){
+        this.hnarArView = arView;
     }
 
     public void setHnarApiKey(@NonNull String hnarApiKey) {

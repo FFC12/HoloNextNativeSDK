@@ -1,8 +1,5 @@
 package com.holonext.holonextnativesdk;
 
-import android.os.Debug;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 public class Util {
