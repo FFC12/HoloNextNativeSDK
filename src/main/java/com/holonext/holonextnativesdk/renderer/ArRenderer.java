@@ -1,8 +1,8 @@
 package com.holonext.holonextnativesdk.renderer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.ar.core.Anchor;
@@ -15,15 +15,25 @@ import com.holonext.holonextnativesdk.Util;
 import com.holonext.holonextnativesdk.exception.HolonextSdkUnknownModelExtensionException;
 
 public class ArRenderer {
+    private boolean debugMode = false;
     private ModelRenderable modelRenderable;
+
+    public void setDebugMode(boolean isEnabled){
+        debugMode = isEnabled;
+    }
+
+    public boolean isDebugMode(){
+        return debugMode;
+    }
 
     public ArRenderer(ArView view,Context context){
         //use a default model URL.
-        String modelUrl = "https://holonext.azurewebsites.net/api/v1/scene/shared-scene/5f69f1a76512d13ac47ad598/beer_test.glb";
+        String modelUrl = "https://holonext.azurewebsites.net/api/v1/scene/public/file/5de12029362138005683f7b8/Office_Chair.glb";
         try {
             initRenderer(view,context,modelUrl);
         } catch (HolonextSdkUnknownModelExtensionException e) {
             e.printStackTrace();
+            Log.e("Ar Renderer Error ",e.getMessage());
         }
     }
 
@@ -32,6 +42,7 @@ public class ArRenderer {
             initRenderer(view,context,modelUrl);
         } catch (HolonextSdkUnknownModelExtensionException e) {
             e.printStackTrace();
+            Log.e("Ar Renderer Error ",e.getMessage());
         }
     }
 
@@ -39,9 +50,9 @@ public class ArRenderer {
         //Selected GLB as a default source type
         RenderableSource.SourceType modelFormat = RenderableSource.SourceType.GLB;
 
-        if (Util.ExtractFileExtensionFromURI(modelUrl) == "glb"){
+        if (Util.ExtractFileExtensionFromURI(modelUrl).equals("glb")){
             modelFormat = RenderableSource.SourceType.GLB;
-        }else if (Util.ExtractFileExtensionFromURI(modelUrl) == "gltf"){
+        }else if (Util.ExtractFileExtensionFromURI(modelUrl).equals("gltf")){
             modelFormat = RenderableSource.SourceType.GLTF2;
         }else{
             throw new HolonextSdkUnknownModelExtensionException("Unknown source type ( model format ). GLB or GLTF types supported for now!");
@@ -54,7 +65,7 @@ public class ArRenderer {
                                         context,
                                         Uri.parse(modelUrl),
                                         modelFormat)
-                                .setScale(1.0f)
+                                .setScale(1.0f).setRecenterMode(RenderableSource.RecenterMode.ROOT)
                                 .build())
                 .setRegistryId(modelUrl)
                 .build()
@@ -70,10 +81,12 @@ public class ArRenderer {
             anchorNode.setParent(view.getArSceneView().getScene());
 
             TransformableNode node = new TransformableNode(view.getTransformationSystem());
-//        node.setLocalScale(new Vector3(1.0f * scaleFactor,1.0f * scaleFactor, 1.0f * scaleFactor));
             node.setParent(anchorNode);
             node.setRenderable(modelRenderable);
             node.select();
+
+            if(debugMode)
+                Toast.makeText(context,"Position : " + node.getWorldPosition().toString(),Toast.LENGTH_LONG).show();
         });
     }
 }

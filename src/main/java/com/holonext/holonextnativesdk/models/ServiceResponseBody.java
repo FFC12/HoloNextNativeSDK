@@ -1,4 +1,4 @@
-package com.holonext.holonextnativesdk.httphandler.models;
+package com.holonext.holonextnativesdk.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,7 +1,7 @@
 package com.holonext.holonextnativesdk.httphandler;
 
-import com.holonext.holonextnativesdk.httphandler.models.ServiceRequest;
-import com.holonext.holonextnativesdk.httphandler.models.ServiceResponse;
+import com.holonext.holonextnativesdk.models.ServiceRequest;
+import com.holonext.holonextnativesdk.models.ServiceResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
