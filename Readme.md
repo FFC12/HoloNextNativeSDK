@@ -4,7 +4,7 @@ WIP
 
 ### Gradle
 ---
-Before you start, must add the HoloNextNativeSDK as dependency to your app `build.gradle` .
+Before you start, must add the HoloNextNativeSDK as dependency to your app `build.gradle`;
 ```
 dependencies {
     ...
@@ -17,7 +17,6 @@ dependencies {
 You can use HoloNext Native SDK in your project in two different ways.
 
 ###### 1 - You can add it to your layout as follows ;
----
 
 ```xml
 <fragment
@@ -47,11 +46,11 @@ try {
 }
 ```
 
-`sceneRelationId` is a unique identifier of each model. These/this id(s) must be provided by HoloNextApi.Go to the [HoloNextApi](https://holonext.azurewebsites.net) website.
+`sceneRelationId` is an unique identifier of each model. These/this id(s) must be provided by HoloNextApi.Go to the [HoloNextApi](https://holonext.azurewebsites.net) website.
 
 
 ###### 2 - You can create fragment programmatically by creating ArConfig data.
----
+
 You must to add `implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'` as dependency to App's build.gradle.Otherwise you will encounter an error.
 
 ```java
