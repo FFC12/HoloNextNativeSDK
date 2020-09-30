@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="ArView">
+    <declare-styleable name="HoloNextArViewer">
         <attr name="hnar_renderer" format="enum">
-            <enum name="default_renderer" value="0"/>
-            <enum name="custom_renderer" value="1"/>
+            <enum name="DEFAULT" value="0"/>
+            <enum name="CUSTOM" value="1"/>
         </attr>
         <attr name="hnar_toolset" format="enum">
-            <enum name="basic_toolset" value="0"/>
-            <enum name="advanced_toolset" value="1"/>
+            <enum name="BASIC" value="0"/>
+            <enum name="ADVANCED" value="1"/>
         </attr>
         <attr name="hnar_api_key" format="string"/>
     </declare-styleable>

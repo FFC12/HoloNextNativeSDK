@@ -1,6 +1,13 @@
 package com.holonext.holonextnativesdk;
 
+import android.net.ConnectivityManager;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class Util {
 

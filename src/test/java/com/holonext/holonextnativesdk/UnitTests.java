@@ -29,4 +29,11 @@ public class UnitTests {
         String expected = "gltf";
         assertEquals("File extension (format) could not extract from file correctly.",expected,result);
     }
+
+    @Test
+    public void hntest_GetRealScaleOfObject(){
+        float result = Util.GetRealScaleOfObject(0.5f,0.2f);
+        float expected = 0.1f;
+        assertEquals(expected,result,0.000001f);
+    }
 }

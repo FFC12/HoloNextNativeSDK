@@ -1,7 +1,7 @@
-package com.holonext.holonextnativesdk;
+package com.holonext.holonextnativesdk.models.types;
 
 /**
- * To specify renderer type that will be using ArView
+ * To specify renderer type that will be using HoloNextArViewer
  * By default, the filament renderer provided by Google is used. This is the renderer available in ArCore.
  * If custom is selected then you may have to implement it yourself or you need to make more adjustments to use
  * a different renderer that can be added in the future (such as HoloNextRenderer).
