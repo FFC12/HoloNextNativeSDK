@@ -46,7 +46,7 @@ try {
 }
 ```
 
-`sceneRelationId` is an unique identifier of each model. These/this id(s) must be provided by HoloNextApi.Go to the [HoloNextApi](https://holonext.azurewebsites.net) website.
+`sceneRelationId` is an unique identifier for each model. These/this id(s) must be provided by HoloNextApi.Go to the [HoloNextApi](https://holonext.azurewebsites.net) website.
 
 
 ###### 2 - You can create fragment programmatically by creating ArConfig data.
@@ -75,7 +75,7 @@ try {
 }
 ```
 
-###### For more details , you can check sample applications in `samples` folder
+###### For more details , you can check sample applications in `samples` folder or inspect API [reference](https://holonext.azurewebsites.net).
 
 ### Limitations
 ---
